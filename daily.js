@@ -45,7 +45,7 @@ function formatSisaWaktu(ms) {
     let jam = Math.floor(totalSeconds / 3600);
     let menit = Math.floor((totalSeconds % 3600) / 60);
     let detik = totalSeconds % 60;
-    return `${jam} jam ${menit} menit ${detik} detik`;
+    return `${jam} giờ ${menit} phút ${detik} giây;
 }
 
 async function getUserStatus() {
