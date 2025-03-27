@@ -53,7 +53,7 @@ async function getUserStatus() {
         const response = await axios.get("https://signup-backend.billions.network/me", { headers });
         const data = response.data;
 
-        console.log(`👤 Tên: ${data.name}`);
+        console.log(`👤 Name: ${data.name}`);
         console.log(`📩 Email: ${data.email}`);
         console.log(`🆔 ID: ${data.id}`);
         console.log(`🏆 Rank: ${data.rank}`);
