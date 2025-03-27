@@ -79,13 +79,13 @@ async function claimDailyReward() {
             console.log("⚠️ Không thể nhận phần thưởng hàng ngày:", response.data);
         }
     } catch (error) {
-        console.error("❌ Gagal klaim daily reward:", error.response?.data || error.message);
+        console.error("❌ Không thể nhận phần thưởng hàng ngày:", error.response?.data || error.message);
     }
 }
 
 async function countdownAndClaim(nextClaimTime) {
     let nextClaimTimestamp = moment(nextClaimTime).tz("Asia/Jakarta").valueOf();
-    console.log(`⏳ Menunggu hingga: ${formatWaktu(nextClaimTime)}...`);
+    console.log(`⏳ Đang chờ: ${formatWaktu(nextClaimTime)}...`);
 
     const interval = setInterval(() => {
         let nowTimestamp = moment().tz("Asia/Jakarta").valueOf();
