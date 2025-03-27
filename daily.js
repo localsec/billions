@@ -50,6 +50,7 @@ function formatSisaWaktu(ms) {
 
 async function getUserStatus() {
     try {
+        const headers = { Authorization: `Bearer YOUR_TOKEN_HERE` }; // Ensure headers are properly defined
         const response = await axios.get("https://signup-backend.billions.network/me", { headers });
         const data = response.data;
 
@@ -60,7 +61,12 @@ async function getUserStatus() {
         console.log(`🔗 Referral Code: ${data.referralCode}`);
         console.log(`⚡ Power: ${data.power}`);
         console.log(`🎖 Level: ${data.level}`);
-        console.log(`🔄 Phần thưởng tiếp theo: ${formatWaktu(data.nextDailyRewardAt)}`);
+
+        if (typeof formatWaktu === "function") {
+            console.log(`🔄 Phần thưởng tiếp theo: ${formatWaktu(data.nextDailyRewardAt)}`);
+        } else {
+            console.warn("⚠️ formatWaktu function is not defined.");
+        }
 
         return data.nextDailyRewardAt;
     } catch (error) {
