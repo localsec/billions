@@ -12,14 +12,14 @@ function readSessionToken() {
         const token = data.split("=")[1];
         return token;
     } catch (err) {
-        console.error("❌ Gagal membaca file token.txt:", err.message);
+        console.error("❌ Không đọc được tệp token.txt:", err.message);
         return null;
     }
 }
 
 const SESSION_ID = readSessionToken();
 if (!SESSION_ID) {
-    console.log("⚠️ Token tidak ditemukan, pastikan token.txt sudah benar.");
+    console.log("⚠️ Không tìm thấy mã thông báo, vui lòng kiểm tra token.txt.");
     process.exit(1);
 }
 
@@ -33,7 +33,7 @@ const headers = {
 
 function showBanner() {
     console.log("\n" + figlet.textSync("NT - Exhaust", { font: "Big" }));
-    console.log("🔥 Automasi Daily Reward by NT - Exhaust 🔥\n");
+    console.log("🔥 Tự động hóa phần thưởng hàng ngày - LocalSec 🔥\n");
 }
 
 function formatWaktu(utcTime) {
@@ -53,18 +53,18 @@ async function getUserStatus() {
         const response = await axios.get("https://signup-backend.billions.network/me", { headers });
         const data = response.data;
 
-        console.log(`👤 Nama: ${data.name}`);
+        console.log(`👤 Tên: ${data.name}`);
         console.log(`📩 Email: ${data.email}`);
         console.log(`🆔 ID: ${data.id}`);
         console.log(`🏆 Rank: ${data.rank}`);
         console.log(`🔗 Referral Code: ${data.referralCode}`);
         console.log(`⚡ Power: ${data.power}`);
         console.log(`🎖 Level: ${data.level}`);
-        console.log(`🔄 Next Daily Reward At: ${formatWaktu(data.nextDailyRewardAt)}`);
+        console.log(`🔄 Phần thưởng tiếp theo: ${formatWaktu(data.nextDailyRewardAt)}`);
 
         return data.nextDailyRewardAt;
     } catch (error) {
-        console.error("❌ Gagal mendapatkan status user:", error.response?.data || error.message);
+        console.error("❌ Không thể lấy được trạng thái người dùng:", error.response?.data || error.message);
         return null;
     }
 }
@@ -74,9 +74,9 @@ async function claimDailyReward() {
         const response = await axios.post("https://signup-backend.billions.network/claim-daily-reward", {}, { headers });
 
         if (response.status === 200) {
-            console.log(`✅ Berhasil klaim daily reward pada ${moment().tz("Asia/Jakarta").format("dddd, DD MMMM YYYY, HH:mm:ss [WIB]")}`);
+            console.log(`✅ Thành công lấy phần thưởng hàng ngày trên ${moment().tz("Asia/Jakarta").format("dddd, DD MMMM YYYY, HH:mm:ss [WIB]")}`);
         } else {
-            console.log("⚠️ Gagal klaim daily reward:", response.data);
+            console.log("⚠️ Không thể nhận phần thưởng hàng ngày:", response.data);
         }
     } catch (error) {
         console.error("❌ Gagal klaim daily reward:", error.response?.data || error.message);
@@ -93,9 +93,9 @@ async function countdownAndClaim(nextClaimTime) {
 
         if (timeUntilClaim <= 0) {
             clearInterval(interval);
-            console.log("\n🚀 Waktunya klaim! Mengirim permintaan...");
+            console.log("\n🚀 Đã đến lúc kiếm tiền rồi! Gửi yêu cầu...");
             claimDailyReward().then(() => {
-                console.log("\n🔄 Menunggu daily reward berikutnya...\n");
+                console.log("\n🔄 Đang chờ phần thưởng hàng ngày tiếp theo...\n");
                 waitUntilNextClaim();
             });
             return;
@@ -103,7 +103,7 @@ async function countdownAndClaim(nextClaimTime) {
 
         process.stdout.clearLine();
         process.stdout.cursorTo(0);
-        process.stdout.write(`⏳ ${formatSisaWaktu(timeUntilClaim)} lagi untuk claim daily`);
+        process.stdout.write(`⏳ ${formatSisaWaktu(timeUntilClaim)} lại đi kiếm tiền nào`);
     }, 1000);
 }
 
@@ -115,7 +115,7 @@ async function waitUntilNextClaim() {
         if (!nextRewardTime) return;
 
         countdownAndClaim(nextRewardTime);
-        await new Promise(resolve => setTimeout(resolve, 24 * 60 * 60 * 1000)); // Tunggu 24 jam sebelum loop ulang
+        await new Promise(resolve => setTimeout(resolve, 24 * 60 * 60 * 1000)); // Chờ 24 giờ trước khi lặp lại
     }
 }
 
