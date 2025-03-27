@@ -32,7 +32,7 @@ const headers = {
 };
 
 function showBanner() {
-    console.log("\n" + figlet.textSync("NT - Exhaust", { font: "Big" }));
+    console.log("\n" + figlet.textSync("Auto-LocalSec", { font: "Big" }));
     console.log("🔥 Billions Auto Reward - Recode by LocalSec 🔥\n");
 }
 
