@@ -32,7 +32,7 @@ const headers = {
 };
 
 function showBanner() {
-    console.log("\n" + figlet.textSync("NT - Exhaust", { font: "Big" }));
+    console.log("\n" + figlet.textSync("LocalSec", { font: "Big" }));
     console.log("🔥 Tự động hóa phần thưởng hàng ngày - LocalSec 🔥\n");
 }
 
